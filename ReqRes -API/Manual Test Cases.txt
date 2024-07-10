@@ -1,0 +1,183 @@
+Reqres API Test Case Document											
+Test Case Type			Functional Test								
+Summary			To Check the Functionality of User, Resources, Register and Login modules of Reqres API								
+Test ID	Module	Test Scenario	HTTP Method	URL	Request Payload	Expected Status Code	Response Payload	Response status code	Response Time(millsec)	Test Result	
+1	Register	To check a user is able to register successfully with a valid email id and password	POST	https://reqres.in/api/register	"{
+    ""email"": ""eve.holt@reqres.in"",
+    ""password"": ""pistol""
+}"	200	"{
+    ""id"": 4,
+    ""token"": ""QpwL5tke4Pnpja7X4""
+}"	200 OK	435	Pass	
+2	Register	To check a user with no pasword should not be able to register successfully	POST	https://reqres.in/api/register	"{
+    ""email"": ""sydney@fife""
+}"	400	"{
+    ""error"": ""Missing password""
+}"	400 Bad Request	1480	Pass	
+3	Login	To check user is able to login successfully with vaild email id and password	POST	https://reqres.in/api/login	"{
+    ""email"": ""eve.holt@reqres.in"",
+    ""password"": ""cityslicka""
+}"	200	"{
+    ""token"": ""QpwL5tke4Pnpja7X4""
+}"	200 OK	363	Pass	
+4	Login	To check user is not able to login without valid password	POST	https://reqres.in/api/login	"{
+    ""email"": ""peter@klaven""
+}"	400	"{
+    ""error"": ""Missing password""
+}"	400 Bad Request	417	Pass	
+5	Users	To display the list of all users on a specific page number	GET	https://reqres.in/api/users?page=2	NA	200	"{
+    ""page"": 2,
+    ""per_page"": 6,
+    ""total"": 12,
+    ""total_pages"": 2,
+    ""data"": [
+        {
+            ""id"": 7,
+            ""email"": ""michael.lawson@reqres.in"",
+            ""first_name"": ""Michael"",
+            ""last_name"": ""Lawson"",
+            ""avatar"": ""https://reqres.in/img/faces/7-image.jpg""
+        },
+        {
+            ""id"": 8,
+            ""email"": ""lindsay.ferguson@reqres.in"",
+            ""first_name"": ""Lindsay"",
+            ""last_name"": ""Ferguson"",
+            ""avatar"": ""https://reqres.in/img/faces/8-image.jpg""
+        },
+        {
+            ""id"": 9,
+            ""email"": ""tobias.funke@reqres.in"",
+            ""first_name"": ""Tobias"",
+            ""last_name"": ""Funke"",
+            ""avatar"": ""https://reqres.in/img/faces/9-image.jpg""
+        },
+        {
+            ""id"": 10,
+            ""email"": ""byron.fields@reqres.in"",
+            ""first_name"": ""Byron"",
+            ""last_name"": ""Fields"",
+            ""avatar"": ""https://reqres.in/img/faces/10-image.jpg""
+        },
+        {
+            ""id"": 11,
+            ""email"": ""george.edwards@reqres.in"",
+            ""first_name"": ""George"",
+            ""last_name"": ""Edwards"",
+            ""avatar"": ""https://reqres.in/img/faces/11-image.jpg""
+        },
+        {
+            ""id"": 12,
+            ""email"": ""rachel.howell@reqres.in"",
+            ""first_name"": ""Rachel"",
+            ""last_name"": ""Howell"",
+            ""avatar"": ""https://reqres.in/img/faces/12-image.jpg""
+        }
+    ],
+    ""support"": {
+        ""url"": ""https://reqres.in/#support-heading"",
+        ""text"": ""To keep ReqRes free, contributions towards server costs are appreciated!""
+    }
+}"	200 OK	25	Pass	
+6	Users	To display a single user with given id	GET	https://reqres.in/api/users/3	NA	200	"{
+    ""data"": {
+        ""id"": 3,
+        ""email"": ""emma.wong@reqres.in"",
+        ""first_name"": ""Emma"",
+        ""last_name"": ""Wong"",
+        ""avatar"": ""https://reqres.in/img/faces/3-image.jpg""
+    },
+    ""support"": {
+        ""url"": ""https://reqres.in/#support-heading"",
+        ""text"": ""To keep ReqRes free, contributions towards server costs are appreciated!""
+    }
+}"	200 OK	25	Pass	
+7	Users	To check a user with invalid id can not be displayed	GET	https://reqres.in/api/users/23	NA	404	{}	404 Not Found	30	Pass	
+8	Users	To create a new users with given name and job	POST	https://reqres.in/api/users	"{
+    ""name"":""Ashu Kumar"",
+    ""job"" : ""Test Analyst""
+}                                                                  "	201	"{
+    ""name"": ""Ashu Kumar"",
+    ""job"": ""Test Analyst"",
+    ""id"": ""939"",
+    ""createdAt"": ""2024-07-09T11:12:38.879Z""
+}"	201 created	366	Pass	
+9	Users	To check user data should be updated 	PUT	https://reqres.in/api/users/939	"{
+    ""name"":""Ashu Kumar"",
+    ""job"" : ""SDET""
+}"	200	"{
+    ""name"": ""Ashu Kumar"",
+    ""job"": ""SDET"",
+    ""updatedAt"": ""2024-07-09T11:18:16.551Z""
+}"	200 OK	405	Pass	
+10	Users	To check a user can be deleted successfully	DELETE	https://reqres.in/api/users/939	NA	204	NA	204 No Content	774	Pass	
+11	Resource	To check all the resources are displayed or not	GET	https://reqres.in/api/unknown	NA	200	"{
+    ""page"": 1,
+    ""per_page"": 6,
+    ""total"": 12,
+    ""total_pages"": 2,
+    ""data"": [
+        {
+            ""id"": 1,
+            ""name"": ""cerulean"",
+            ""year"": 2000,
+            ""color"": ""#98B2D1"",
+            ""pantone_value"": ""15-4020""
+        },
+        {
+            ""id"": 2,
+            ""name"": ""fuchsia rose"",
+            ""year"": 2001,
+            ""color"": ""#C74375"",
+            ""pantone_value"": ""17-2031""
+        },
+        {
+            ""id"": 3,
+            ""name"": ""true red"",
+            ""year"": 2002,
+            ""color"": ""#BF1932"",
+            ""pantone_value"": ""19-1664""
+        },
+        {
+            ""id"": 4,
+            ""name"": ""aqua sky"",
+            ""year"": 2003,
+            ""color"": ""#7BC4C4"",
+            ""pantone_value"": ""14-4811""
+        },
+        {
+            ""id"": 5,
+            ""name"": ""tigerlily"",
+            ""year"": 2004,
+            ""color"": ""#E2583E"",
+            ""pantone_value"": ""17-1456""
+        },
+        {
+            ""id"": 6,
+            ""name"": ""blue turquoise"",
+            ""year"": 2005,
+            ""color"": ""#53B0AE"",
+            ""pantone_value"": ""15-5217""
+        }
+    ],
+    ""support"": {
+        ""url"": ""https://reqres.in/#support-heading"",
+        ""text"": ""To keep ReqRes free, contributions towards server costs are appreciated!""
+    }
+}"	200 ok	26	Pass	
+12	Resource	To check user is able to get single resource	GET	https://reqres.in/api/unknown/3	NA	200	"{
+    ""data"": {
+        ""id"": 3,
+        ""name"": ""true red"",
+        ""year"": 2002,
+        ""color"": ""#BF1932"",
+        ""pantone_value"": ""19-1664""
+    },
+    ""support"": {
+        ""url"": ""https://reqres.in/#support-heading"",
+        ""text"": ""To keep ReqRes free, contributions towards server costs are appreciated!""
+    }
+}"	200 Ok	53	Pass	
+
+Author		Aashutosh Jha									
+Date		7/9/2024									
